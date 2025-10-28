@@ -100,7 +100,8 @@ if ($record_id) {
 
         <form class="insert" action="/transcript/update" method="post" novalidate>
 
-          // TODO: send record id to server as "grade_id"
+          // send record id to server as "grade_id"
+          <input type="hidden" name="grade_id" value="<?php echo htmlspecialchars($record_id);?>">
 
           <div class="label-input">
             <label for="insert-grade">Grade:</label>
