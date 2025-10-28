@@ -23,15 +23,18 @@ include_once("includes/transcript-values.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $record_id = ($_POST["grade_id"] == "" ? NULL : (int)$_POST["grade_id"]);
 } else {
-  // TODO: get the record id for the grade
-  $record_id = NULL;
+  // get the record id for the grade
+  $record_id = ($_GET["record"] == "" ? NULL : (int)$_GET["record"]);
 }
 
 // Get the record using the `id` from the DB.
 if ($record_id) {
   $records = exec_sql_query(
     $db,
-    "SELECT id, course_id, grade FROM grades"
+    "SELECT id, course_id, grade FROM grades WHERE (id = :id)",
+    array(
+      ":id" => $record_id
+    )
   )->fetchAll();
 
   // Did we find the record?
