@@ -26,8 +26,9 @@ $sort_css_classes = array(
   "course_desc" => "inactive"
 );
 
-// TODO: get the "order" query string parameter
-$order_param = NULL;
+// get the "order" query string parameter
+$order_param = $_GET['order'] ?? NULL;
+// $order_param = $_GET['order'] == "" ? NULL : $_GET["order"];
 
 if ($order_param == "asc") {
   $sort_css_classes[$sort_param . "course_asc"] = "";
@@ -73,10 +74,10 @@ FROM grades INNER JOIN courses ON (grades.course_id = courses.id);")->fetchAll()
 
     <p style="text-align: right; margin-bottom: 0.5em;">
       <!-- TODO: add "order" query string parameters to URL -->
-      <a href="/transcript">Sort Alphabetically</a>
+      <a href="/transcript?<?php echo http_build_query(array("order" => "asc"));?>">Sort Alphabetically</a>
       |
       <!-- TODO: add "order" query string parameters to URL -->
-      <a href="/transcript">Sort Reverse Alphabetically</a>
+      <a href="/transcript?<?php echo http_build_query(array("order" => "desc"));?>">Sort Reverse Alphabetically</a>
       |
       <!-- TODO: add "order" query string parameters to URL -->
       <a href="/transcript">No Sort</a>
